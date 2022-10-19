@@ -1,23 +1,16 @@
 import logo from './logo.svg';
 import './App.css';
+import { useMachine } from 'xstate';
+import { RedditMachine } from './machines';
+import { Subreddit } from './components';
 
 function App() {
+  const [current, send] = useMachine(RedditMachine);
+  const { subreddit } = current.context;
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {subreddit && <Subreddit service={subreddit} key={subreddit} />}
     </div>
   );
 }
